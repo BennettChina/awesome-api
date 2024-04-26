@@ -1,0 +1,13 @@
+### 解析二维码
+GET localhost:8000/api/qrcode?url=http://example.com/test.png
+
+### 文件类型
+POST localhost:8000/api/qrcode
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="test.png"
+Content-Type: multipart/form-data
+
+< test.png
+--WebAppBoundary--

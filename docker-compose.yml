@@ -1,0 +1,10 @@
+version: "3"
+services:
+  awesome-api:
+    build:
+      context: .
+    image: awesome-api:latest
+    container_name: awesome-api
+    ports:
+      - "8000:80"
+    restart: unless-stopped
