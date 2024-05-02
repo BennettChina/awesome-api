@@ -5,9 +5,7 @@ LABEL maintainer="Bennett <bennett_aisa@outlook.com>"
 WORKDIR /app
 
 COPY requirements.txt ./
-RUN uname -a && \
-    pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
-    pip install --no-cache-dir --upgrade -r requirements.txt
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 COPY . .
 
