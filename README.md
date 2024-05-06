@@ -29,3 +29,31 @@ Content-Type: multipart/form-data
 < test.png
 --WebAppBoundary--
 ```
+
+## 部署
+
+### Docker 部署
+
+```shell
+docker run -d --name awesome-api -p 8000:80 bennettwu/awesome-api
+```
+
+### Docker Compose 部署
+
+```yaml
+version: "3"
+services:
+  awesome-api:
+    image: awesome-api:latest
+    container_name: awesome-api
+    ports:
+      - "8000:80"
+    restart: unless-stopped
+```
+
+### 源码部署
+
+```shell
+pip3 install -r requirements.txt && \
+uvicorn api.index:app --host 0.0.0.0 --port 8000
+```

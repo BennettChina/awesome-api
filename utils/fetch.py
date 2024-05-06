@@ -1,8 +1,11 @@
 import requests
+from fastapi import HTTPException
 
 
 async def download_file(url: str) -> bytes:
     response = requests.get(url)
+    if response.status_code != 200:
+        raise HTTPException(400, f"URL 不可用，访问结果为{response.status_code}")
     return bytearray(response.content)
 
 
