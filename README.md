@@ -16,11 +16,11 @@ https://awesome-api-mu5q.onrender.com
 
 该接口还支持以下参数
 
-|    字段     |    类型    | 描述           |
-|:---------:|:--------:|:-------------|
-|    url    |   str    | 图片的链接        |
-|  headers  |  object  | 访问URL使用的请求头  |
-|  timeout  |   int    | 请求超时时间       |
+|   字段    |   类型   | 描述          | 必要 |
+|:-------:|:------:|:------------|:--:|
+|   url   |  str   | 图片的链接       | Y  |
+| headers | object | 访问URL使用的请求头 | N  |
+| timeout |  int   | 请求超时时间      | N  |
 
 ```http request
 POST http://localhost:8000/api/qrcode/url
