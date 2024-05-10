@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, UploadFile
 
-from api.model.NetResource import NetResource
+from api.model.net_resource import NetResource
+from api.model.resp import ok
 from modules import decode_qrcode
 from utils import fetch, validate
 
@@ -21,7 +22,7 @@ async def qrcode_file(file: UploadFile):
     img = await file.read(file.size)
     res, _ = await decode_qrcode.decode(img)
     await file.close()
-    return res
+    return ok(res)
 
 
 @router.post("/qrcode/url", tags=["qrcode"])
@@ -36,4 +37,4 @@ async def qrcode(item: NetResource):
         raise HTTPException(status_code=400, detail="Invalid URL")
     img = await fetch.download_file(url, item.headers, item.timeout)
     res, _ = await decode_qrcode.decode(img)
-    return res
+    return ok(res)

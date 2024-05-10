@@ -10,6 +10,8 @@ https://awesome-api-mu5q.onrender.com
 |--------|-------|--------|
 | qrcode | 解析二维码 | 支持一图多码 |
 
+更多 API 文档 可访问 `/docs` 查看。
+
 ### qrcode
 
 #### 以图片 URL 的形式
@@ -43,6 +45,19 @@ Content-Type: multipart/form-data
 
 < test.png
 --WebAppBoundary--
+```
+
+#### 响应内容
+
+```json5
+{
+  "code": 0,
+  "message": "success",
+  "data": [
+    "测试内容",
+    "https://example.com/"
+  ]
+}
 ```
 
 ## 部署

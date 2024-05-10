@@ -9,6 +9,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException
 
+from api.model.resp import error
 from api.router import qrcode
 from utils import ip
 
@@ -39,14 +40,14 @@ async def validation_exception_handler(_request, exc: RequestValidationError):
     valid_result = exc.args[0][0]
     message = valid_result["msg"]
     return JSONResponse(
-        content=jsonable_encoder({"code": 400, "message": message}),
+        content=jsonable_encoder(error(400, message)),
     )
 
 
 @app.exception_handler(Exception)
-async def base_exception_handler(_request, exc):
+async def base_exception_handler(_request, exc: Exception):
     logger.error(exc)
-    return JSONResponse(content={"code": 500, "message": exc.detail})
+    return JSONResponse(content=jsonable_encoder(error(500, "未知异常")))
 
 
 @app.middleware("http")
