@@ -1,12 +1,13 @@
 from fastapi import APIRouter, HTTPException, UploadFile
 
+from api.model.NetResource import NetResource
 from modules import decode_qrcode
 from utils import fetch, validate
 
 router = APIRouter()
 
 
-@router.post("/qrcode", tags=["qrcode"])
+@router.post("/qrcode/file", tags=["qrcode"])
 async def qrcode_file(file: UploadFile):
     """
     解析图片中二维码的内容
@@ -23,17 +24,16 @@ async def qrcode_file(file: UploadFile):
     return res
 
 
-@router.get("/qrcode", tags=["qrcode"])
-async def qrcode(url: str):
+@router.post("/qrcode/url", tags=["qrcode"])
+async def qrcode(item: NetResource):
     """
     解析图片中二维码的内容
-    :param url: 图片的 URL
+    :param item: 下载图片使用的参数
     :return: 解析结果数组
     """
+    url = item.url
     if len(url) == 0 or not validate.is_url(url):
         raise HTTPException(status_code=400, detail="Invalid URL")
-    if not validate.is_image_url(url):
-        raise HTTPException(status_code=400, detail="File type not supported")
-    img = await fetch.download_file(url)
+    img = await fetch.download_file(url, item.headers, item.timeout)
     res, _ = await decode_qrcode.decode(img)
     return res

@@ -10,16 +10,31 @@ https://awesome-api-mu5q.onrender.com
 |--------|-------|--------|
 | qrcode | 解析二维码 | 支持一图多码 |
 
-- qrcode
+### qrcode
+
+#### 以图片 URL 的形式
+
+该接口还支持以下参数
+
+|    字段     |    类型    | 描述           |
+|:---------:|:--------:|:-------------|
+|    url    |   str    | 图片的链接        |
+|  headers  |  object  | 访问URL使用的请求头  |
+|  timeout  |   int    | 请求超时时间       |
 
 ```http request
-### 以图片链接的形式
-GET localhost:8000/api/qrcode?url={image_url}
+POST http://localhost:8000/api/qrcode/url
+Content-Type: application/json
+
+{
+   "url": "https://example.com/test.jpg"
+}
 ```
 
+#### 以图片文件的形式
+
 ```http request
-### 以图片文件的形式
-POST localhost:8000/api/qrcode
+POST http://localhost:8000/api/qrcode
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary

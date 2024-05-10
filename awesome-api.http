@@ -1,8 +1,13 @@
 ### 解析二维码
-GET localhost:8000/api/qrcode?url=http://example.com/test.png
+POST localhost:8000/api/qrcode/url
+Content-Type: application/json
+
+{
+  "url": "https://example.com/test.jpg"
+}
 
 ### 文件类型
-POST localhost:8000/api/qrcode
+POST localhost:8000/api/qrcode/file
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
