@@ -16,3 +16,17 @@ Content-Type: multipart/form-data
 
 < test.png
 --WebAppBoundary--
+
+###
+GET localhost:8000/api/manual/captcha?gt=577b4bd7588f37321d053d96fb162892&challenge=ecab973827708d52421658908b200f48
+
+###
+POST localhost:8000/api/manual/captcha
+Content-Type: application/json
+
+{
+    "gt": "577b4bd7588f37321d053d96fb162892",
+    "geetest_challenge": "ecab973827708d52421658908b200f48",
+    "geetest_validate": "success",
+    "geetest_seccode": "111111111111"
+}

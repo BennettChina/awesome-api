@@ -6,9 +6,10 @@ https://awesome-api-mu5q.onrender.com
 
 ## API列表
 
-| 名称     | 用途    | 备注     |
-|--------|-------|--------|
-| qrcode | 解析二维码 | 支持一图多码 |
+| 名称     | 用途       | 备注     |
+|--------|----------|--------|
+| qrcode | 解析二维码    | 支持一图多码 |
+| 极验     | 保存人机验证结果 |        |  
 
 更多 API 文档 可访问 `/docs` 查看。
 
@@ -65,7 +66,13 @@ Content-Type: multipart/form-data
 ### Docker 部署
 
 ```shell
-docker run -d --name awesome-api -p 8000:80 bennettwu/awesome-api
+docker run -d \
+--name awesome-api \
+-p 8000:80 \
+-e REDIS_HOST=localhost \
+-e REDIS_PORT=6379 \
+-e REDIS_PASSWORD=password \
+bennettwu/awesome-api
 ```
 
 ### Docker Compose 部署
@@ -76,6 +83,10 @@ services:
   awesome-api:
     image: awesome-api:latest
     container_name: awesome-api
+    environment:
+      REDIS_HOST: <redis ip>
+      REDIS_PORT: <redis port>
+      REDIS_PASSWORD: <redis password>
     ports:
       - "8000:80"
     restart: unless-stopped
@@ -87,3 +98,12 @@ services:
 pip3 install -r requirements.txt && \
 uvicorn api.index:app --host 0.0.0.0 --port 8000
 ```
+
+## 环境变量
+
+| 名称             | 描述 | 默认值         |
+|----------------|----|-------------|
+| REDIS_HOST     | IP | `localhost` |
+| REDIS_PORT     | 端口 | `6379`      |
+| REDIS_PASSWORD | 密码 |             |
+| REDIS_DB       | DB | `0`         |
