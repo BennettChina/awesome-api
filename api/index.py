@@ -7,6 +7,7 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException
+from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
 
 from api.model.resp import error
@@ -71,6 +72,13 @@ async def log_requests(request: Request, call_next):
 
     return response
 
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(qrcode_router, prefix="/api", tags=["api"])
 app.include_router(captcha_router, prefix="/api", tags=["api"])
