@@ -1,6 +1,6 @@
 FROM python:3.12-slim
 
-LABEL maintainer="Bennett <bennett_aisa@outlook.com>"
+LABEL maintainer="Bennett <bennett_asia@outlook.com>"
 
 WORKDIR /app
 

@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: awesome-api
+    runtime: python
+    plan: free
+    envVars:
+      - key: REDIS_HOST
+        fromService:
+          name: awesome-redis
+          type: redis
+          property: host
+    region: singapore
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api.index:app --host 0.0.0.0 --port 80
+    healthCheckPath: /
+  - type: redis
+    name: awesome-redis
+    plan: free
+    region: singapore
+    maxmemoryPolicy: allkeys-lru
+    ipAllowList: [ ]
+version: "1"
