@@ -29,5 +29,5 @@ async def captcha_get(challenge: str):
     """
     data = redis_client.hget_all(challenge)
     if data.__len__() == 0:
-        return error(1401, "invalid params")
+        return error(1404, "not found challenge")
     return ok(data)
