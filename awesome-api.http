@@ -30,3 +30,18 @@ Content-Type: application/json
     "geetest_validate": "success",
     "geetest_seccode": "111111111111"
 }
+
+###
+POST localhost:8000/api/manual/captcha
+Content-Type: application/json
+
+{
+    "captcha_id": "caf244bd21555cc6ce52ceca524340b8",
+    "lot_number": "1e20cd1c0cbb4c30b62497fe1f6d1197",
+    "pass_token": "12e6aa45a2d24c7d18e160a173520c407808d8c2bf213993673c40508a62f557",
+    "gen_time": "1787162318",
+    "captcha_output": "CFjcHR2X543oJEDZxDb7MMFoIaMAc6WpXzWjyzx0ty23BPRYkYbFB1tYOMpRbofb3pMbqoxuldk9bEsiKMulZNKt7_VkFV7jK2GWxdXeEBddsSf-vVx5xQ6N7YTCagOve_W_L-Yuia4ZyTAHnEJ24jJDLgqrxxpvuTjdej2J_JVC4WLiviRWXPg_DZcDdcmGjO5uiyO989wMIECYa6tAzjMna0rmAPrSoNQUOvieuYoqWnfI6aRIoqV_6gq0yo9Q_5xNVIFd10cF6psxfddjsUqkhGR_KVtAx1S-0qFsRMfFAazq0_Rz-rmsRMda_ab18DRQjLtLzgLyY5e5HboatfNdWbxRQMeJDaZFEybmCjwo4J0e00GM9ewspIqloY7VAg_v6VafUw7KWXoBNCiBy8ZAjbFth2mnDu1YltvfFto_hqG_5CFG3E1lB1SwDKFtDKT3TrCffVFRiDUE5m_BJzYqHLpQ3ebvITwJJMkfMzA="
+}
+
+###
+GET localhost:8000/api/manual/captcha?challenge=caf244bd21555cc6ce52ceca524340b8
