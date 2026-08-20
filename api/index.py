@@ -1,11 +1,12 @@
 import time
 import uuid
+import json
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from starlette.exceptions import HTTPException
 from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
@@ -60,15 +61,33 @@ async def log_requests(request: Request, call_next):
         body = await request.form()
     if request.headers.get("Content-Type") == "application/json":
         body = await request.json()
-    logger.info(f"ip={client_ip} - trace_id={idem} - start request path={request.url.path}, body={body}")
+    query_params = dict(request.query_params)
+    logger.info(f"ip={client_ip} - trace_id={idem} - start request path={request.url.path}, "
+                f"query_params={query_params}, body={body}")
     start_time = time.time()
 
     response = await call_next(request)
 
     process_time = (time.time() - start_time) * 1000
     formatted_process_time = '{0:.2f}'.format(process_time)
+    response_body = ""
+    content_type = response.headers.get("content-type", "")
+    if content_type.startswith("application/json"):
+        body_iterator = getattr(response, "body_iterator", None)
+        if body_iterator is not None:
+            body_bytes = b"".join([chunk async for chunk in body_iterator])
+            response = Response(
+                content=body_bytes,
+                status_code=response.status_code,
+                headers=dict(response.headers),
+                background=response.background,
+            )
+            try:
+                response_body = json.loads(body_bytes)
+            except (json.JSONDecodeError, UnicodeDecodeError):
+                response_body = body_bytes.decode("utf-8", errors="replace")
     logger.info(f"ip={client_ip} - trace_id={idem} - completed_in={formatted_process_time}ms, "
-                f"status_code={response.status_code}")
+                f"status_code={response.status_code}, response={response_body}")
 
     return response
 

@@ -63,6 +63,10 @@ Content-Type: multipart/form-data
 
 ## 部署
 
+### 本地开发
+
+需要 Python3.12 的 Python 环境
+
 ### Render 部署
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/BennettChina/awesome-api)
