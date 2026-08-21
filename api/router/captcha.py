@@ -15,11 +15,10 @@ async def captcha(item: Captcha):
     :return: None
     """
     if isinstance(item, CaptchaV4):
-        key = item.captcha_id
-        value = item.model_dump()
+        key = item.key or item.captcha_id
     else:
-        key = item.geetest_challenge
-        value = item.model_dump()
+        key = item.key or item.geetest_challenge
+    value = item.model_dump(exclude={"key"})
 
     redis_client.hset_all(key, value)
     # 缓存验证结果 10 分钟
@@ -28,13 +27,17 @@ async def captcha(item: Captcha):
 
 
 @router.get("/manual/captcha", tags=["captcha"])
-async def captcha_get(challenge: str):
+async def captcha_get(challenge: str | None = None, key: str | None = None):
     """
     获取验证码的结果
-    :param challenge: 极验 V3 的 geetest_challenge，或极验 V4 的 captcha_id
+    :param challenge: 兼容旧参数，传入缓存键即可
+    :param key: 新增的缓存键
     :return: see Captcha class
     """
-    data = redis_client.hget_all(challenge)
+    cache_key = key or challenge
+    if not cache_key:
+        return error(400, "missing key or challenge")
+    data = redis_client.hget_all(cache_key)
     if data.__len__() == 0:
         return error(1404, "not found challenge")
     return ok(data)

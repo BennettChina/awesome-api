@@ -25,6 +25,7 @@ POST localhost:8000/api/manual/captcha
 Content-Type: application/json
 
 {
+    "key": "captcha-key-v3",
     "gt": "577b4bd7588f37321d053d96fb162892",
     "geetest_challenge": "ecab973827708d52421658908b200f48",
     "geetest_validate": "success",
@@ -36,6 +37,7 @@ POST localhost:8000/api/manual/captcha
 Content-Type: application/json
 
 {
+    "key": "captcha-key-v4",
     "captcha_id": "caf244bd21555cc6ce52ceca524340b8",
     "lot_number": "1e20cd1c0cbb4c30b62497fe1f6d1197",
     "pass_token": "12e6aa45a2d24c7d18e160a173520c407808d8c2bf213993673c40508a62f557",
@@ -44,4 +46,4 @@ Content-Type: application/json
 }
 
 ###
-GET localhost:8000/api/manual/captcha?challenge=caf244bd21555cc6ce52ceca524340b8
+GET localhost:8000/api/manual/captcha?key=captcha-key-v4
